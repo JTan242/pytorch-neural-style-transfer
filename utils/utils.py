@@ -7,7 +7,9 @@ import matplotlib.pyplot as plt
 
 
 from models.definitions.vgg_nets import Vgg16, Vgg19, Vgg16Experimental
-
+# from models.definitions.mobilenet import MobileNetV2
+from models.definitions.mobilenet import MobileNetV2_NST as MobileNetV2
+from models.definitions.resnet_50 import ResNet50
 
 IMAGENET_MEAN_255 = [123.675, 116.28, 103.53]
 IMAGENET_STD_NEUTRAL = [1, 1, 1]
@@ -115,6 +117,11 @@ def prepare_model(model, device):
             model = Vgg16(requires_grad=False, show_progress=True)
     elif model == 'vgg19':
         model = Vgg19(requires_grad=False, show_progress=True)
+    elif model == 'mobilenet_v2':
+        # model = MobileNetV2(requires_grad=False, show_progress=True)
+        model = MobileNetV2(requires_grad=False, show_progress=True)
+    elif model == 'resnet_50':
+        model = ResNet50(requires_grad=False, show_progress=True)
     else:
         raise ValueError(f'{model} not supported.')
 
