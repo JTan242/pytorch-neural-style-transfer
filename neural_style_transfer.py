@@ -86,8 +86,8 @@ def neural_style_transfer(config):
 
     # magic numbers in general are a big no no - some things in this code are left like this by design to avoid clutter
     num_of_iterations = {
-        "lbfgs": 1000,
-        "adam": 3000,
+        "lbfgs": 500,
+        "adam": 150,
     }
 
     #
@@ -149,7 +149,7 @@ if __name__ == "__main__":
     parser.add_argument("--tv_weight", type=float, help="weight factor for total variation loss", default=1e0)
 
     parser.add_argument("--optimizer", type=str, choices=['lbfgs', 'adam'], default='lbfgs')
-    parser.add_argument("--model", type=str, choices=['vgg16', 'vgg19'], default='vgg19')
+    parser.add_argument("--model", type=str, choices=['vgg16', 'vgg19', 'mobilenet_v2', 'resnet_50'], default='vgg19')
     parser.add_argument("--init_method", type=str, choices=['random', 'content', 'style'], default='content')
     parser.add_argument("--saving_freq", type=int, help="saving frequency for intermediate images (-1 means only final)", default=-1)
     args = parser.parse_args()

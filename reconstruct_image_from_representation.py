@@ -64,7 +64,7 @@ def reconstruct_image_from_representation(config):
     neural_net, content_feature_maps_index_name, style_feature_maps_indices_names = utils.prepare_model(config['model'], device)
 
     # don't want to expose everything that's not crucial so some things are hardcoded
-    num_of_iterations = {'adam': 3000, 'lbfgs': 350}
+    num_of_iterations = {'adam': 3000, 'lbfgs': 100}
 
     set_of_feature_maps = neural_net(img)
 
@@ -153,14 +153,14 @@ if __name__ == "__main__":
     #
     parser = argparse.ArgumentParser()
     parser.add_argument("--should_reconstruct_content", type=bool, help="pick between content or style image reconstruction", default=True)
-    parser.add_argument("--should_visualize_representation", type=bool, help="visualize feature maps or Gram matrices", default=False)
+    parser.add_argument("--should_visualize_representation", type=bool, help="visualize feature maps or Gram matrices", default=True)
 
     parser.add_argument("--content_img_name", type=str, help="content image name", default='lion.jpg')
     parser.add_argument("--style_img_name", type=str, help="style image name", default='ben_giles.jpg')
     parser.add_argument("--height", type=int, help="width of content and style images (-1 keep original)", default=500)
 
     parser.add_argument("--saving_freq", type=int, help="saving frequency for intermediate images (-1 means only final)", default=1)
-    parser.add_argument("--model", type=str, choices=['vgg16', 'vgg19'], default='vgg19')
+    parser.add_argument("--model", type=str, choices=['vgg16', 'vgg19', 'mobilenet_v2', 'resnet_50'], default='mobilenet_v2')
     parser.add_argument("--optimizer", type=str, choices=['lbfgs', 'adam'], default='lbfgs')
     parser.add_argument("--reconstruct_script", type=str, help='dummy param - used in saving func', default=True)
     args = parser.parse_args()
