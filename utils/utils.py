@@ -10,6 +10,7 @@ from models.definitions.vgg_nets import Vgg16, Vgg19, Vgg16Experimental
 # from models.definitions.mobilenet import MobileNetV2
 from models.definitions.mobilenet import MobileNetV2_NST as MobileNetV2
 from models.definitions.resnet_50 import ResNet50
+from models.definitions.alexnet import AlexNet
 
 IMAGENET_MEAN_255 = [123.675, 116.28, 103.53]
 IMAGENET_STD_NEUTRAL = [1, 1, 1]
@@ -122,6 +123,8 @@ def prepare_model(model, device):
         model = MobileNetV2(requires_grad=False, show_progress=True)
     elif model == 'resnet_50':
         model = ResNet50(requires_grad=False, show_progress=True)
+    elif model == 'alexnet':
+        model = AlexNet(requires_grad=False, show_progress=True)
     else:
         raise ValueError(f'{model} not supported.')
 
