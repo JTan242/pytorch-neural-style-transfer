@@ -42,7 +42,7 @@ def load_image(img_path, target_shape=None):
 
 
 def prepare_img(img_path, target_shape, device, model_type=None):
-    img = Image.open(img_path).convert('RGB')  # ✅ Make sure it's a PIL Image
+    img = Image.open(img_path).convert('RGB') 
 
     if model_type == 'inception_net':
         resize_size = 299
