@@ -23,15 +23,15 @@ class MobileNetV2_NST(nn.Module):
 
         # Pick out the layers to use
         self.layer_names = ['stage1','stage2','stage3','stage4']
-        self.content_feature_maps_index = 2   # use slice3 for content
+        self.content_feature_maps_index = 2   
         self.style_feature_maps_indices  = [0,1,2,3]
 
         # Create the slices
         feats = models.mobilenet_v2(pretrained=True, progress=show_progress).features
-        self.slice1 = nn.Sequential(*feats[0:3])   # edges
-        self.slice2 = nn.Sequential(*feats[3:5])   # textures
-        self.slice3 = nn.Sequential(*feats[5:9])   # patterns
-        self.slice4 = nn.Sequential(*feats[9:19])  # semantics
+        self.slice1 = nn.Sequential(*feats[0:3])   
+        self.slice2 = nn.Sequential(*feats[3:5])   
+        self.slice3 = nn.Sequential(*feats[5:9])   
+        self.slice4 = nn.Sequential(*feats[9:19])  
 
         if not requires_grad:
             for p in self.parameters():

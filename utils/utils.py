@@ -4,6 +4,7 @@ import torch
 from torchvision import transforms
 import os
 import matplotlib.pyplot as plt
+from PIL import Image
 
 
 from models.definitions.vgg_nets import Vgg16, Vgg19, Vgg16Experimental
@@ -15,7 +16,6 @@ from models.definitions.inception_net import InceptionNet
 from models.definitions.cnn import CNN
 IMAGENET_MEAN_255 = [123.675, 116.28, 103.53]
 IMAGENET_STD_NEUTRAL = [1, 1, 1]
-
 
 #
 # Image manipulation util functions
@@ -41,20 +41,24 @@ def load_image(img_path, target_shape=None):
     return img
 
 
-def prepare_img(img_path, target_shape, device):
-    img = load_image(img_path, target_shape=target_shape)
+def prepare_img(img_path, target_shape, device, model_type=None):
+    img = Image.open(img_path).convert('RGB')  # ✅ Make sure it's a PIL Image
 
-    # normalize using ImageNet's mean
-    # [0, 255] range worked much better for me than [0, 1] range (even though PyTorch models were trained on latter)
+    if model_type == 'inception_net':
+        resize_size = 299
+    else:
+        resize_size = target_shape if isinstance(target_shape, int) else max(target_shape)
+
     transform = transforms.Compose([
+        transforms.Resize((resize_size, resize_size)),
         transforms.ToTensor(),
         transforms.Lambda(lambda x: x.mul(255)),
         transforms.Normalize(mean=IMAGENET_MEAN_255, std=IMAGENET_STD_NEUTRAL)
     ])
 
     img = transform(img).to(device).unsqueeze(0)
-
     return img
+
 
 
 def save_image(img, img_path):

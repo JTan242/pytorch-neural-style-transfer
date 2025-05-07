@@ -59,8 +59,8 @@ def neural_style_transfer(config):
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-    content_img = utils.prepare_img(content_img_path, config['height'], device)
-    style_img = utils.prepare_img(style_img_path, config['height'], device)
+    content_img = utils.prepare_img(content_img_path, config['height'], device, model_type=config['model'])
+    style_img = utils.prepare_img(style_img_path, config['height'], device, model_type=config['model'])
 
     if config['init_method'] == 'random':
         # white_noise_img = np.random.uniform(-90., 90., content_img.shape).astype(np.float32)
@@ -71,7 +71,7 @@ def neural_style_transfer(config):
     else:
         # init image has same dimension as content image - this is a hard constraint
         # feature maps need to be of same size for content image and init image
-        style_img_resized = utils.prepare_img(style_img_path, np.asarray(content_img.shape[2:]), device)
+        style_img_resized = utils.prepare_img(style_img_path, np.asarray(content_img.shape[2:]), device, model_type=config['model'])
         init_img = style_img_resized
 
     # we are tuning optimizing_img's pixels! (that's why requires_grad=True)
