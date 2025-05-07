@@ -7,6 +7,7 @@ from torch.autograd import Variable
 import numpy as np
 import os
 import argparse
+import time
 
 
 def build_loss(neural_net, optimizing_img, target_representations, content_feature_maps_index, style_feature_maps_indices, config):
@@ -47,6 +48,8 @@ def make_tuning_step(neural_net, optimizer, target_representations, content_feat
 
 
 def neural_style_transfer(config):
+    start_time = time.time()
+
     content_img_path = os.path.join(config['content_images_dir'], config['content_img_name'])
     style_img_path = os.path.join(config['style_images_dir'], config['style_img_name'])
 
@@ -121,7 +124,8 @@ def neural_style_transfer(config):
             return total_loss
 
         optimizer.step(closure)
-
+    end_time = time.time()
+    print(f"\nStyle transfer completed in {end_time - start_time:.2f} seconds.")
     return dump_path
 
 
@@ -149,7 +153,7 @@ if __name__ == "__main__":
     parser.add_argument("--tv_weight", type=float, help="weight factor for total variation loss", default=1e0)
 
     parser.add_argument("--optimizer", type=str, choices=['lbfgs', 'adam'], default='lbfgs')
-    parser.add_argument("--model", type=str, choices=['vgg16', 'vgg19', 'mobilenet', 'resnet_50','alexnet'], default='vgg19')
+    parser.add_argument("--model", type=str, choices=['vgg16', 'vgg19', 'mobilenet', 'resnet_50','alexnet', 'inception_net','cnn'], default='vgg19')
     parser.add_argument("--init_method", type=str, choices=['random', 'content', 'style'], default='content')
     parser.add_argument("--saving_freq", type=int, help="saving frequency for intermediate images (-1 means only final)", default=-1)
     args = parser.parse_args()
