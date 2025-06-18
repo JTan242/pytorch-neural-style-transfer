@@ -50,8 +50,8 @@ Key experiments explored content retention, style representation, runtime, and c
 ## Usage Instructions
 Clone the repository:
 ```
-git clone https://github.com/<your-username>/style-transfer-cnn-comparison.git
-cd style-transfer-cnn-comparison
+git clone https://github.com/<your-username>/pytorch-neural-style-transfer.git
+cd pytorch-neural-style-transfer
 ```
 Run style transfer:
 ``` 
